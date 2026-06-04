@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { MessageSquarePlus, X, Send, CheckCircle2 } from 'lucide-react'
 
-export default function FeedbackWidget() {
+export default function FeedbackWidget({ inChat = false }) {
   const [open, setOpen] = useState(false)
   const [message, setMessage] = useState('')
   const [name, setName] = useState('')
@@ -46,7 +46,9 @@ export default function FeedbackWidget() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-5 right-5 z-30 flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-3 text-sm font-medium text-white shadow-lg transition-all hover:bg-[var(--accent-hov)] active:scale-95"
+        className={`fixed right-4 z-30 flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-3 text-sm font-medium text-white shadow-lg transition-all hover:bg-[var(--accent-hov)] active:scale-95 sm:bottom-5 sm:right-5 ${
+          inChat ? 'bottom-24' : 'bottom-5'
+        }`}
         aria-label="Send feedback"
       >
         <MessageSquarePlus size={18} />

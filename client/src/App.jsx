@@ -192,7 +192,7 @@ function App() {
         {view === 'chat' && <InputBar onSend={sendMessage} disabled={isStreaming} />}
       </div>
 
-      <FeedbackWidget />
+      <FeedbackWidget inChat={view === 'chat'} />
     </div>
   )
 }
