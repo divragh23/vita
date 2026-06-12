@@ -7,6 +7,7 @@ import HealthTopics from './components/HealthTopics'
 import SavedTips from './components/SavedTips'
 import FeedbackWidget from './components/FeedbackWidget'
 import LeafLogo from './components/LeafLogo'
+import Splash from './components/Splash'
 
 const TIPS_KEY = 'vita_saved_tips'
 const THEME_KEY = 'vita_theme'
@@ -17,6 +18,18 @@ function App() {
   const [showDisclaimer, setShowDisclaimer] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [view, setView] = useState('chat')
+
+  const [booting, setBooting] = useState(true)
+  const [hiding, setHiding] = useState(false)
+
+  useEffect(() => {
+    const fade = setTimeout(() => setHiding(true), 1300)
+    const done = setTimeout(() => setBooting(false), 1850)
+    return () => {
+      clearTimeout(fade)
+      clearTimeout(done)
+    }
+  }, [])
 
   const [theme, setTheme] = useState(
     () => localStorage.getItem(THEME_KEY) ||
@@ -131,6 +144,8 @@ function App() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[var(--bg)]">
+      {booting && <Splash hiding={hiding} />}
+
       <Sidebar
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
@@ -139,7 +154,7 @@ function App() {
         savedCount={savedTips.length}
       />
 
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="app-fade-in flex min-w-0 flex-1 flex-col">
         <header className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface)] px-4 py-3">
           <button
             onClick={() => setSidebarOpen(true)}
